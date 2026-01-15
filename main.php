@@ -2,7 +2,7 @@
 
 require_once 'vendor/autoload.php';
 
-use App\Builders\BuilderOrdenador;
+use App\Products\Ordenador\BuilderOrdenador;
 use App\Director\Director;
 
 // Crear un builder

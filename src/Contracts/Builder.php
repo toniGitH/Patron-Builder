@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Builders;
+namespace App\Contracts;
 
 // Este el el Builder propiamente dicho. Es el constructor GENÉRICO
 interface Builder

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Builders;
+namespace App\Products\Ordenador;
 
-use App\Products\Ordenador;
+use App\Contracts\Builder;
 
 class BuilderOrdenador implements Builder
 {

@@ -1,6 +1,6 @@
 <?php
 
-    namespace App\Products;
+    namespace App\Products\Ordenador;
 
     class Ordenador 
     {
@@ -61,6 +61,7 @@
     }
 
     // --- GETTERS ---
+    // En un proyecto real, no sería necesario implementar los getters.
 
     public function getTipo(): string { return $this->tipo; }
     public function getMarca(): string { return $this->marca; }

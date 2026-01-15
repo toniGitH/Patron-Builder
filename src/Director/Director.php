@@ -2,7 +2,7 @@
 
 namespace App\Director;
 
-use App\Builders\Builder;
+use App\Contracts\Builder;
 
 // La clase Director en un patrón Builder es la que conoce el proceso de fabricación de uno o varios producos diferentes.
 // Es una clase OPCIONAL dentro del patrón Builder. 
