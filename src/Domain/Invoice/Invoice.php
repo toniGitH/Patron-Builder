@@ -30,7 +30,7 @@ class Invoice
         if ($caseType === 'Laptop') {
             $this->casePrice = 50;
         } elseif ($caseType === 'Desktop') {
-            $this->casePrice = 100;
+            $this->casePrice = 75;
         } else {
             $this->casePrice = 0;
         }
@@ -39,15 +39,15 @@ class Invoice
     public function setBrandFactor(string $brand): void
     {
         if ($brand === 'Apple') {
-            $this->brandFactor = 3;
-        } elseif ($brand === 'HP') {
             $this->brandFactor = 2;
+        } elseif ($brand === 'HP') {
+            $this->brandFactor = 1.8;
         } elseif ($brand === 'Acer') {
-            $this->brandFactor = 1.5;
+            $this->brandFactor = 1.4;
         } elseif ($brand === 'Asus') {
-            $this->brandFactor = 1.3;
-        } elseif ($brand === 'Lenovo') {
             $this->brandFactor = 1.2;
+        } elseif ($brand === 'Lenovo') {
+            $this->brandFactor = 1;
         } else {
             $this->brandFactor = 0;
         }
@@ -61,11 +61,11 @@ class Invoice
     public function setProcessorPrice(string $processor): void
     {
         if (stripos($processor, 'M4') !== false) {
-            $this->processorPrice = 400;
+            $this->processorPrice = 150;
         } elseif (stripos($processor, 'AMD') !== false) {
-            $this->processorPrice = 300;
+            $this->processorPrice = 100;
         } elseif (stripos($processor, 'Intel') !== false) {
-            $this->processorPrice = 200;
+            $this->processorPrice = 125;
         } else {
             $this->processorPrice = 0;
         }
@@ -78,12 +78,12 @@ class Invoice
 
     public function setSsdPrice(int $ssd): void
     {
-        $this->ssdPrice = $ssd * 10;
+        $this->ssdPrice = $ssd * 60;
     }
 
     public function setGpuPrice(bool $gpu): void
     {
-        $this->gpuPrice = $gpu ? 200 : 0;
+        $this->gpuPrice = $gpu ? 100 : 0;
     }
     
     public function setExtrasPrice(array $extrasPrice): void
@@ -94,11 +94,11 @@ class Invoice
     public function setOperatingSystemPrice(string $operatingSystem): void
     {
         if (stripos($operatingSystem, 'Windows') !== false) {
-            $this->operatingSystemPrice = 200;
+            $this->operatingSystemPrice = 100;
         } elseif (stripos($operatingSystem, 'Linux') !== false) {
             $this->operatingSystemPrice = 10;
         } elseif (stripos($operatingSystem, 'macOS') !== false) {
-            $this->operatingSystemPrice = 300;
+            $this->operatingSystemPrice = 80;
         } else {
             $this->operatingSystemPrice = 0;
         }

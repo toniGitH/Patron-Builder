@@ -47,14 +47,14 @@
             $this->userManual->setProcessor($procesador);
         }
 
-        public function ram(string $ram): void
+        public function ram(int $ram): void
         {
-            $this->userManual->setRam((int)$ram);
+            $this->userManual->setRam($ram);
         }
 
-        public function ssd(string $ssd): void
+        public function ssd(int $ssd): void
         {
-            $this->userManual->setSsd((int)$ssd);
+            $this->userManual->setSsd($ssd);
         }
 
         public function gpu(bool $gpu): void

@@ -51,12 +51,12 @@
             $this->computer->setProcessor($procesador);
         }
 
-        public function ram(string $ram): void
+        public function ram(int $ram): void
         {
-            $this->computer->setRam((int)$ram);
+            $this->computer->setRam($ram);
         }
 
-        public function ssd(string $ssd): void
+        public function ssd(int $ssd): void
         {
             $this->computer->setSsd((int)$ssd);
         }

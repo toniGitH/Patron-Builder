@@ -29,8 +29,8 @@
             $this->builder->brand('Apple');
             $this->builder->model('MacBook Pro');
             $this->builder->processor('M4');
-            $this->builder->ram('16GB');
-            $this->builder->ssd('2TB');
+            $this->builder->ram(16);
+            $this->builder->ssd(2);
             $this->builder->gpu(true);
             $this->builder->operatingSystem('Windows 11');
         }
@@ -44,8 +44,8 @@
             $this->builder->brand('HP');
             $this->builder->model('GamerPro');
             $this->builder->processor('Intel Core i9');
-            $this->builder->ram('32GB');
-            $this->builder->ssd('4TB');
+            $this->builder->ram(32);
+            $this->builder->ssd(2);
             $this->builder->gpu(true);
             $this->builder->extra('Keyboard');
             $this->builder->extra('Mouse');
@@ -62,8 +62,8 @@
             $this->builder->brand('Acer');
             $this->builder->model('Economy');
             $this->builder->processor('AMD Ryzen 3');
-            $this->builder->ram('8GB');
-            $this->builder->ssd('1TB');
+            $this->builder->ram(8);
+            $this->builder->ssd(1);
             $this->builder->gpu(false);
             $this->builder->extra('Keyboard');
             $this->builder->extra('Mouse');

@@ -19,46 +19,42 @@ class InvoiceBuilder implements Builder
         $this->extras = [];
     }
 
-    public function CaseType(string $tipo): void
+    public function caseType(string $tipo): void
     {
         $this->invoice->setCasePrice($tipo);
     }
 
-    public function Processor(string $procesador): void
+    public function processor(string $procesador): void
     {
         $this->invoice->setProcessorPrice($procesador);
     }
 
-    public function Brand(string $marca): void
+    public function brand(string $marca): void
     {
         $this->invoice->setBrandFactor($marca);
     }
 
-    public function Model(string $modelo): void
+    public function model(string $modelo): void
     {
         $this->invoice->setModel($modelo);
     }
 
-    public function Ram(string $ram): void
+    public function ram(int $ram): void
     {
-        // Extraemos el número de la cadena (ej: "16GB" -> 16)
-        $val = (int) filter_var($ram, FILTER_SANITIZE_NUMBER_INT);
-        $this->invoice->setRamPrice($val);
+        $this->invoice->setRamPrice($ram);
     }
 
-    public function Ssd(string $ssd): void
+    public function ssd(int $ssd): void
     {
-        // Extraemos el número de la cadena (ej: "2TB" -> 2)
-        $val = (int) filter_var($ssd, FILTER_SANITIZE_NUMBER_INT);
-        $this->invoice->setSsdPrice($val);
+        $this->invoice->setSsdPrice($ssd);
     }
 
-    public function Gpu(bool $gpu): void
+    public function gpu(bool $gpu): void
     {
         $this->invoice->setGpuPrice($gpu);
     }
 
-    public function Extra(string $extra): void
+    public function extra(string $extra): void
     {
         $price = 0;
         if (stripos($extra, 'Mouse') !== false) {
@@ -73,7 +69,7 @@ class InvoiceBuilder implements Builder
         $this->invoice->setExtrasPrice($this->extras);
     }
 
-    public function OperatingSystem(string $sistemaOperativo): void
+    public function operatingSystem(string $sistemaOperativo): void
     {
         $this->invoice->setOperatingSystemPrice($sistemaOperativo);
     }

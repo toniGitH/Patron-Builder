@@ -17,15 +17,15 @@
         public function resetComputerProduct(): void;
         
         // Métodos específicos para construir el ordenador, manual de usuario o factura
-        public function CaseType(string $tipo): void;
-        public function Processor(string $procesador): void;
-        public function Brand(string $marca): void;
-        public function Model(string $modelo): void;
-        public function Ram(string $ram): void;
-        public function Ssd(string $ssd): void;
-        public function Gpu(bool $gpu): void;
-        public function Extra(string $extra): void;
-        public function OperatingSystem(string $sistemaOperativo): void;
+        public function caseType(string $tipo): void;
+        public function processor(string $procesador): void;
+        public function brand(string $marca): void;
+        public function model(string $modelo): void;
+        public function ram(int $ram): void;
+        public function ssd(int $ssd): void;
+        public function gpu(bool $gpu): void;
+        public function extra(string $extra): void;
+        public function operatingSystem(string $sistemaOperativo): void;
     
         /** 
          * La interfaz Builder, por lo general, no declara ningún método para obtener el producto final, porque
