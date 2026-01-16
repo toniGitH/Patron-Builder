@@ -32,7 +32,6 @@
             $this->builder->ram('16GB');
             $this->builder->ssd('2TB');
             $this->builder->gpu(true);
-            $this->builder->extra('Video capture device');
             $this->builder->operatingSystem('Windows 11');
         }
         
@@ -48,8 +47,9 @@
             $this->builder->ram('32GB');
             $this->builder->ssd('4TB');
             $this->builder->gpu(true);
-            $this->builder->extra('Gaming keyboard');
-            $this->builder->extra('Gaming mouse');
+            $this->builder->extra('Keyboard');
+            $this->builder->extra('Mouse');
+            $this->builder->extra('Monitor');
             $this->builder->operatingSystem('Windows 11');
         }
 
@@ -65,6 +65,9 @@
             $this->builder->ram('8GB');
             $this->builder->ssd('1TB');
             $this->builder->gpu(false);
+            $this->builder->extra('Keyboard');
+            $this->builder->extra('Mouse');
+            $this->builder->extra('Monitor');
             $this->builder->operatingSystem('Linux Mint');
         }
     }

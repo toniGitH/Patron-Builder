@@ -4,6 +4,7 @@
 
     use App\Domain\Computer\ComputerBuilder;
     use App\Domain\UserManual\UserManualBuilder;
+    use App\Domain\Invoice\InvoiceBuilder;
     use App\Director\Director;
 
     // 1. FABRICACIÓN DE UN ORDENADOR FÍSICO (MacBook Pro)
@@ -42,13 +43,19 @@
 
     // 3. EMISIÓN DE LA FACTURA DEL COSTE DE FABRICACIÓN DE UN ORDENADOR FÍSICO (del MacBook Pro)
     // Instanciamos el Builder específico que crea facturas (el InvoiceBuilder)
-    //$builder = new InvoiceBuilder();
-    // Creamos un director (opcional) y le asignamos el builder que necesitamos
-    //$director = new Director($builder);
+    $builder = new InvoiceBuilder();
+    
+    // Al director le asignamos el nuevo builder
+    $director->changeBuilder($builder);
+
     // Fabricamos una factura para el MacBook Pro
-    //$director->macBookPro();
+    $director->macBookPro();
+
     // Obtenemos la factura fabricada
-    //$macBookProInvoice = $builder->getInvoice();
+    $macBookProInvoice = $builder->getInvoice();
+
+    // Imprimimos la factura
+    echo $macBookProInvoice->printInvoice() . PHP_EOL;
 
     // 4. FABRICACIÓN DE UN ORDENADOR FÍSICO (Gaming Pro)
 
@@ -85,13 +92,19 @@
     
     // 6. EMISIÓN DE LA FACTURA DEL COSTE DE FABRICACIÓN DE UN ORDENADOR FÍSICO (del GamerPro)
     // Instanciamos el Builder específico que crea facturas (el InvoiceBuilder)
-    //$builder = new InvoiceBuilder();
-    // Creamos un director (opcional) y le asignamos el builder que necesitamos
-    //$director = new Director($builder);
+    $builder = new InvoiceBuilder();
+
+    // Al director le asignamos el nuevo builder
+    $director->changeBuilder($builder);
+
     // Fabricamos una factura para el GamerPro
-    //$director->gamingPro();
+    $director->gamingPro();
+
     // Obtenemos la factura fabricada
-    //$gamingProInvoice = $builder->getInvoice();
+    $gamingProInvoice = $builder->getInvoice();
+
+    // Imprimimos la factura
+    echo $gamingProInvoice->printInvoice() . PHP_EOL;
 
     // 7. FABRICACIÓN DE UN ORDENADOR FÍSICO (Acer Economy)
 
@@ -128,10 +141,16 @@
     
     // 9. EMISIÓN DE LA FACTURA DEL COSTE DE FABRICACIÓN DE UN ORDENADOR FÍSICO (del Acer Economy)
     // Instanciamos el Builder específico que crea facturas (el InvoiceBuilder)
-    //$builder = new InvoiceBuilder();
-    // Creamos un director (opcional) y le asignamos el builder que necesitamos
-    //$director = new Director($builder);
+    $builder = new InvoiceBuilder();
+
+    // Al director le asignamos el nuevo builder
+    $director->changeBuilder($builder);
+
     // Fabricamos una factura para el Acer Economy
-    //$director->acerEconomy();
+    $director->acerEconomy();
+
     // Obtenemos la factura fabricada
-    //$acerEconomyInvoice = $builder->getInvoice();
+    $acerEconomyInvoice = $builder->getInvoice();
+
+    // Imprimimos la factura
+    echo $acerEconomyInvoice->printInvoice() . PHP_EOL;

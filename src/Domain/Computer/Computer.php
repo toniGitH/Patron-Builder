@@ -5,14 +5,14 @@
     class Computer 
     {
         private string $caseType; // Desktop or Laptop
-        private string $brand;
+        private string $brand; // Apple, HP, Acer, Asus and Lenovo
         private string $model;
-        private string $processor; // Intel, AMD o M4
+        private string $processor; // Intel, AMD or M4
         private int $ram; // in GB
         private int $ssd; // in TB
         private bool $gpu;
-        private array $extras = [];
-        private string $operatingSystem; // Windows, Linux o macOS
+        private array $extras = []; // Array of extras (mouse, keyboard and monitor)
+        private string $operatingSystem; // Windows, Linux or macOS
 
 
         public function setCaseType(string $caseType): void
