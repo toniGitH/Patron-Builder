@@ -11,14 +11,20 @@ class Invoice
      */
 
     private int $casePrice;
+    private string $caseType;
     private float $brandFactor;
     private string $model;
     private int $processorPrice;
+    private string $processor;
     private int $ramPrice;
+    private int $ram;
     private int $ssdPrice;
+    private int $ssd;
     private int $gpuPrice;
+    private bool $hasGpu;
     private array $extrasPrice = [];
     private int $operatingSystemPrice;
+    private string $operatingSystem;
 
     /**
      * MÉTODOS SETTERS: Los "setters" esta clase también cambian respecto a los de la clase Computer y los de la
@@ -27,6 +33,7 @@ class Invoice
 
     public function setCasePrice(string $caseType): void 
     {
+        $this->caseType = $caseType;
         if ($caseType === 'Laptop') {
             $this->casePrice = 50;
         } elseif ($caseType === 'Desktop') {
@@ -60,6 +67,7 @@ class Invoice
 
     public function setProcessorPrice(string $processor): void
     {
+        $this->processor = $processor;
         if (stripos($processor, 'M4') !== false) {
             $this->processorPrice = 150;
         } elseif (stripos($processor, 'AMD') !== false) {
@@ -73,16 +81,19 @@ class Invoice
 
     public function setRamPrice(int $ram): void
     {
+        $this->ram = $ram;
         $this->ramPrice = $ram * 5;
     }
 
     public function setSsdPrice(int $ssd): void
     {
+        $this->ssd = $ssd;
         $this->ssdPrice = $ssd * 60;
     }
 
     public function setGpuPrice(bool $gpu): void
     {
+        $this->hasGpu = $gpu;
         $this->gpuPrice = $gpu ? 100 : 0;
     }
     
@@ -93,6 +104,7 @@ class Invoice
 
     public function setOperatingSystemPrice(string $operatingSystem): void
     {
+        $this->operatingSystem = $operatingSystem;
         if (stripos($operatingSystem, 'Windows') !== false) {
             $this->operatingSystemPrice = 100;
         } elseif (stripos($operatingSystem, 'Linux') !== false) {
@@ -124,29 +136,29 @@ class Invoice
         $invoice .= "       FACTURA PROFORMA: " . strtoupper($this->model) . "       \n";
         $invoice .= "====================================================\n\n";
 
-        $invoice .= sprintf("%-35s %12s\n", "Componente", "Coste");
-        $invoice .= "----------------------------------------------------\n";
-        $invoice .= sprintf("%-35s %10d €\n", "Chasis y montaje base", $this->casePrice);
-        $invoice .= sprintf("%-35s %10d €\n", "Procesador", $this->processorPrice);
-        $invoice .= sprintf("%-35s %10d €\n", "Memoria RAM", $this->ramPrice);
-        $invoice .= sprintf("%-35s %10d €\n", "Almacenamiento SSD", $this->ssdPrice);
-        $invoice .= sprintf("%-35s %10d €\n", "Tarjeta Gráfica (GPU)", $this->gpuPrice);
-        $invoice .= sprintf("%-35s %10d €\n", "Sistema Operativo", $this->operatingSystemPrice);
+        $invoice .= mb_str_pad("Componente", 25) . " " . mb_str_pad("Cantidad/Tipo", 15) . " " . mb_str_pad("Coste", 12, " ", STR_PAD_LEFT) . "\n";
+        $invoice .= "------------------------------------------------------------\n";
+        $invoice .= mb_str_pad("Chasis y montaje base", 25) . " " . mb_str_pad($this->caseType, 15) . " " . mb_str_pad($this->casePrice . " €", 12, " ", STR_PAD_LEFT) . "\n";
+        $invoice .= mb_str_pad("Procesador", 25) . " " . mb_str_pad($this->processor, 15) . " " . mb_str_pad($this->processorPrice . " €", 12, " ", STR_PAD_LEFT) . "\n";
+        $invoice .= mb_str_pad("Memoria RAM", 25) . " " . mb_str_pad($this->ram . " GB", 15) . " " . mb_str_pad($this->ramPrice . " €", 12, " ", STR_PAD_LEFT) . "\n";
+        $invoice .= mb_str_pad("Almacenamiento SSD", 25) . " " . mb_str_pad($this->ssd . " TB", 15) . " " . mb_str_pad($this->ssdPrice . " €", 12, " ", STR_PAD_LEFT) . "\n";
+        $invoice .= mb_str_pad("Tarjeta Gráfica (GPU)", 25) . " " . mb_str_pad($this->hasGpu ? "Sí" : "No", 15) . " " . mb_str_pad($this->gpuPrice . " €", 12, " ", STR_PAD_LEFT) . "\n";
+        $invoice .= mb_str_pad("Sistema Operativo", 25) . " " . mb_str_pad($this->operatingSystem, 15) . " " . mb_str_pad($this->operatingSystemPrice . " €", 12, " ", STR_PAD_LEFT) . "\n";
 
         if (!empty($this->extrasPrice)) {
-            $invoice .= "----------------------------------------------------\n";
+            $invoice .= "------------------------------------------------------------\n";
             $invoice .= "EXTRAS:\n";
             foreach ($this->extrasPrice as $name => $price) {
-                $invoice .= sprintf(" [+] %-30s %10d €\n", $name, $price);
+                $invoice .= " [+] " . mb_str_pad($name, 20) . " " . mb_str_pad("", 15) . " " . mb_str_pad($price . " €", 12, " ", STR_PAD_LEFT) . "\n";
             }
         }
 
-        $invoice .= "----------------------------------------------------\n";
-        $invoice .= sprintf("%-35s %10d €\n", "COSTE BRUTO TOTAL", $costeBrutoTotal);
-        $invoice .= sprintf("%-35s %10.1f x\n", "Multiplicador de Marca", $this->brandFactor);
-        $invoice .= "====================================================\n";
-        $invoice .= sprintf("%-35s %10.2f €\n", "TOTAL NETO A PAGAR", $total);
-        $invoice .= "====================================================\n";
+        $invoice .= "------------------------------------------------------------\n";
+        $invoice .= mb_str_pad("COSTE BRUTO TOTAL", 41) . " " . mb_str_pad($costeBrutoTotal . " €", 12, " ", STR_PAD_LEFT) . "\n";
+        $invoice .= mb_str_pad("Multiplicador de Marca", 41) . " " . mb_str_pad($this->brandFactor . " x", 12, " ", STR_PAD_LEFT) . "\n";
+        $invoice .= "============================================================\n";
+        $invoice .= mb_str_pad("TOTAL NETO A PAGAR", 41) . " " . mb_str_pad(number_format($total, 2) . " €", 12, " ", STR_PAD_LEFT) . "\n";
+        $invoice .= "============================================================\n";
 
         return $invoice;
     }

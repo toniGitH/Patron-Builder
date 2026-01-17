@@ -1,156 +1,88 @@
 <?php
 
-    require_once 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
-    use App\Domain\Computer\ComputerBuilder;
-    use App\Domain\UserManual\UserManualBuilder;
-    use App\Domain\Invoice\InvoiceBuilder;
-    use App\Director\Director;
+use App\Domain\Computer\ComputerBuilder;
+use App\Domain\UserManual\UserManualBuilder;
+use App\Domain\Invoice\InvoiceBuilder;
+use App\Director\Director;
 
-    // 1. FABRICACIÓN DE UN ORDENADOR FÍSICO (MacBook Pro)
+/**
+ * Lógica de fabricación de productos
+ */
+$productos = [];
+$modelos = ['macBookPro', 'gamingPro', 'acerEconomy'];
 
-    // Instanciamos el Builder específico que crea orednadores físicos (el ComputerBuilder)
+foreach ($modelos as $modeloName) {
+    $bundle = [
+        'name' => $modeloName,
+        'computer' => null,
+        'manual' => null,
+        'invoice' => null
+    ];
+
+    // 1. Computer
     $builder = new ComputerBuilder();
-
-    // Instanciamos un director y le asignamos el builder anterior, que es el que necesitamos
     $director = new Director($builder);
+    $director->$modeloName();
+    $bundle['computer'] = $builder->getComputer();
 
-    // Fabricamos un ordenador MacBook Pro
-    $director->macBookPro();
-
-    // Obtenemos el ordenador fabricado
-    $macBookProComputer = $builder->getComputer();
-
-    // Mostramos el ordenador fabricado
-    var_dump($macBookProComputer);
-
-    // 2. ELABORACIÓN DEL MANUAL DE USUARIO DE UN ORDENADOR FÍSICO (del MacBook Pro)
-
-    // Instanciamos el Builder específico que crea manuales de usuario (el UserManualBuilder)
+    // 2. UserManual
     $builder = new UserManualBuilder();
-
-    // Al director le asignamos el nuevo builder que acabamos de instanciar que es el que necesitamos ahora
     $director->changeBuilder($builder);
+    $director->$modeloName();
+    $bundle['manual'] = $builder->getUserManual();
 
-    // Fabricamos un manual de usuario para el MacBook Pro
-    $director->macBookPro();
-
-    // Obtenemos el objeto manual de usuario fabricado
-    $macBookProManual = $builder->getUserManual();
-
-    // Imprimimos el manual de usuario fabricado
-    echo $macBookProManual->printDescription() . PHP_EOL;
-
-    // 3. EMISIÓN DE LA FACTURA DEL COSTE DE FABRICACIÓN DE UN ORDENADOR FÍSICO (del MacBook Pro)
-    // Instanciamos el Builder específico que crea facturas (el InvoiceBuilder)
+    // 3. Invoice
     $builder = new InvoiceBuilder();
-    
-    // Al director le asignamos el nuevo builder
     $director->changeBuilder($builder);
+    $director->$modeloName();
+    $bundle['invoice'] = $builder->getInvoice();
 
-    // Fabricamos una factura para el MacBook Pro
-    $director->macBookPro();
+    $productos[] = $bundle;
+}
 
-    // Obtenemos la factura fabricada
-    $macBookProInvoice = $builder->getInvoice();
+/**
+ * Lógica de visualización por terminal (CLI)
+ */
+if (php_sapi_name() === 'cli' && count(debug_backtrace()) === 0) {
+    echo "============================================================\n";
+    echo "       EJEMPLO DEL PATRÓN BUILDER: FABRICACIÓN PRO          \n";
+    echo "============================================================\n";
 
-    // Imprimimos la factura
-    echo $macBookProInvoice->printInvoice() . PHP_EOL;
+    foreach ($productos as $bundle) {
+        echo "\n" . str_repeat("=", 60) . "\n";
+        echo " MODELO: " . strtoupper($bundle['name']) . "\n";
+        echo str_repeat("=", 60) . "\n\n";
 
-    // 4. FABRICACIÓN DE UN ORDENADOR FÍSICO (Gaming Pro)
+        echo "--- [1] OBJETO COMPUTER ---\n";
+        var_dump($bundle['computer']);
 
-    // Instanciamos el Builder específico que crea ordenadores físicos (el ComputerBuilder)
-    $builder = new ComputerBuilder();
+        echo "\n--- [2] MANUAL DE USUARIO ---\n";
+        if ($bundle['manual']) {
+            echo $bundle['manual']->printDescription() . "\n";
+        }
 
-    // Al director le asignamos el nuevo builder que acabamos de instanciar, que es el que necesitamos ahora
-    $director->changeBuilder($builder);
+        echo "--- [3] FACTURA ---\n";
+        if ($bundle['invoice']) {
+            echo $bundle['invoice']->printInvoice() . "\n";
+        }
+        echo str_repeat("-", 60) . "\n";
+    }
 
-    // Fabricamos un ordenador GamerPro
-    $director->gamingPro();
+    echo "============================================================\n";
+    echo "VENTAJAS DEL PATRÓN BUILDER:\n";
+    echo "============================================================\n";
+    $ventajas = [
+        "Permite crear objetos complejos paso a paso.",
+        "Mismo proceso de construcción para diferentes representaciones.",
+        "Aísla el código de construcción de la lógica del negocio.",
+        "Facilita el cumplimiento del principio de responsabilidad única."
+    ];
+    foreach ($ventajas as $ventaja) {
+        echo " ✓ " . $ventaja . "\n";
+    }
+    echo "\n";
+}
 
-    // Obtenemos el ordenador fabricado
-    $gamingProComputer = $builder->getComputer();
-
-    // Mostramos el ordenador fabricado
-    var_dump($gamingProComputer);
-
-    // 5. ELABORACIÓN DEL MANUAL DE USUARIO DE UN ORDENADOR FÍSICO (del GamerPro)
-    // Instanciamos el Builder específico que crea manuales de usuario (el UserManualBuilder)
-    $builder = new UserManualBuilder();
-
-    // Al director le asignamos el nuevo builder
-    $director->changeBuilder($builder);
-
-    // Fabricamos un manual de usuario para el GamerPro
-    $director->gamingPro();
-
-    // Obtenemos el manual de usuario fabricado
-    $gamingProManual = $builder->getUserManual();
-
-    // Imprimimos el manual
-    echo $gamingProManual->printDescription() . PHP_EOL;
-    
-    // 6. EMISIÓN DE LA FACTURA DEL COSTE DE FABRICACIÓN DE UN ORDENADOR FÍSICO (del GamerPro)
-    // Instanciamos el Builder específico que crea facturas (el InvoiceBuilder)
-    $builder = new InvoiceBuilder();
-
-    // Al director le asignamos el nuevo builder
-    $director->changeBuilder($builder);
-
-    // Fabricamos una factura para el GamerPro
-    $director->gamingPro();
-
-    // Obtenemos la factura fabricada
-    $gamingProInvoice = $builder->getInvoice();
-
-    // Imprimimos la factura
-    echo $gamingProInvoice->printInvoice() . PHP_EOL;
-
-    // 7. FABRICACIÓN DE UN ORDENADOR FÍSICO (Acer Economy)
-
-    // Instanciamos el Builder específico que crea ordenadores físicos (el ComputerBuilder)
-    $builder = new ComputerBuilder();
-
-    // Al director le asignamos el nuevo builder que acabamos de instanciar, que es el que necesitamos ahora
-    $director->changeBuilder($builder);
-
-    // Fabricamos un ordenador Acer Economy
-    $director->acerEconomy();
-
-    // Obtenemos el ordenador fabricado
-    $acerEconomyComputer = $builder->getComputer();
-
-    // Mostramos el ordenador fabricado
-    var_dump($acerEconomyComputer);
-
-    // 8. ELABORACIÓN DEL MANUAL DE USUARIO DE UN ORDENADOR FÍSICO (del Acer Economy)
-    // Instanciamos el Builder específico que crea manuales de usuario (el UserManualBuilder)
-    $builder = new UserManualBuilder();
-
-    // Al director le asignamos el nuevo builder
-    $director->changeBuilder($builder);
-
-    // Fabricamos un manual de usuario para el Acer Economy
-    $director->acerEconomy();
-
-    // Obtenemos el manual de usuario fabricado
-    $acerEconomyManual = $builder->getUserManual();
-
-    // Imprimimos el manual
-    echo $acerEconomyManual->printDescription() . PHP_EOL;
-    
-    // 9. EMISIÓN DE LA FACTURA DEL COSTE DE FABRICACIÓN DE UN ORDENADOR FÍSICO (del Acer Economy)
-    // Instanciamos el Builder específico que crea facturas (el InvoiceBuilder)
-    $builder = new InvoiceBuilder();
-
-    // Al director le asignamos el nuevo builder
-    $director->changeBuilder($builder);
-
-    // Fabricamos una factura para el Acer Economy
-    $director->acerEconomy();
-
-    // Obtenemos la factura fabricada
-    $acerEconomyInvoice = $builder->getInvoice();
-
-    // Imprimimos la factura
-    echo $acerEconomyInvoice->printInvoice() . PHP_EOL;
+// Nota: La variable $productos queda disponible si este archivo es incluido (ej. en index.php)
