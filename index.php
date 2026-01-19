@@ -19,7 +19,7 @@ require_once 'main.php';
     </header>
 
     <main class="products-grid">
-        <?php foreach ($productos as $bundle): ?>
+        <?php foreach ($products as $bundle): ?>
             <section class="product-row">
                 <h2 class="row-title">MODELO: <?= strtoupper($bundle['name']) ?></h2>
 

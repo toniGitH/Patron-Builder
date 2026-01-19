@@ -2,45 +2,56 @@
 
 require_once 'vendor/autoload.php';
 
-use App\Domain\Computer\ComputerBuilder;
-use App\Domain\UserManual\UserManualBuilder;
-use App\Domain\Invoice\InvoiceBuilder;
-use App\Director\Director;
+use App\Clients\ComputerShop;
 
 /**
- * Lógica de fabricación de productos
+ * Lógica de fabricación de products (Cliente ComputerShop)
  */
-$productos = [];
-$modelos = ['macBookPro', 'gamingPro', 'acerEconomy'];
+$shop = new ComputerShop();
+$products = [];
 
-foreach ($modelos as $modeloName) {
-    $bundle = [
-        'name' => $modeloName,
-        'computer' => null,
-        'manual' => null,
-        'invoice' => null
-    ];
+// --- PEDIDO 1: MacBook Pro ---
+// El cliente entra en la tienda...
+$computerMac = $shop->sellComputer('macBookPro');
+$manualMac   = $shop->generateManual('macBookPro');
+$invoiceMac  = $shop->generateInvoice('macBookPro');
 
-    // 1. Computer
-    $builder = new ComputerBuilder();
-    $director = new Director($builder);
-    $director->$modeloName();
-    $bundle['computer'] = $builder->getComputer();
+// Guardamos para el visualizador
+$products[] = [
+    'name'     => 'macBookPro',
+    'computer' => $computerMac,
+    'manual'   => $manualMac,
+    'invoice'  => $invoiceMac
+];
 
-    // 2. UserManual
-    $builder = new UserManualBuilder();
-    $director->changeBuilder($builder);
-    $director->$modeloName();
-    $bundle['manual'] = $builder->getUserManual();
+// --- PEDIDO 2: Gaming Pro ---
+// Otro cliente pide un equipo Gaming...
+$computerGaming = $shop->sellComputer('gamingPro');
+$manualGaming   = $shop->generateManual('gamingPro');
+$invoiceGaming  = $shop->generateInvoice('gamingPro');
 
-    // 3. Invoice
-    $builder = new InvoiceBuilder();
-    $director->changeBuilder($builder);
-    $director->$modeloName();
-    $bundle['invoice'] = $builder->getInvoice();
+// Guardamos para el visualizador
+$products[] = [
+    'name'     => 'gamingPro',
+    'computer' => $computerGaming,
+    'manual'   => $manualGaming,
+    'invoice'  => $invoiceGaming
+];
 
-    $productos[] = $bundle;
-}
+// --- PEDIDO 3: Acer Economy ---
+// Un tercer cliente busca algo económico...
+$computerAcer = $shop->sellComputer('acerEconomy');
+$manualAcer   = $shop->generateManual('acerEconomy');
+$invoiceAcer  = $shop->generateInvoice('acerEconomy');
+
+// Guardamos para el visualizador
+$products[] = [
+    'name'     => 'acerEconomy',
+    'computer' => $computerAcer,
+    'manual'   => $manualAcer,
+    'invoice'  => $invoiceAcer
+];
+
 
 /**
  * Lógica de visualización por terminal (CLI)
@@ -50,7 +61,7 @@ if (php_sapi_name() === 'cli' && count(debug_backtrace()) === 0) {
     echo "       EJEMPLO DEL PATRÓN BUILDER: FABRICACIÓN PRO          \n";
     echo "============================================================\n";
 
-    foreach ($productos as $bundle) {
+    foreach ($products as $bundle) {
         echo "\n" . str_repeat("=", 60) . "\n";
         echo " MODELO: " . strtoupper($bundle['name']) . "\n";
         echo str_repeat("=", 60) . "\n\n";
@@ -85,4 +96,4 @@ if (php_sapi_name() === 'cli' && count(debug_backtrace()) === 0) {
     echo "\n";
 }
 
-// Nota: La variable $productos queda disponible si este archivo es incluido (ej. en index.php)
+// Nota: La variable $products queda disponible si este archivo es incluido (ej. en index.php)
