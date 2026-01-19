@@ -6,6 +6,9 @@ use App\Domain\Computer\ComputerBuilder;
 use App\Domain\UserManual\UserManualBuilder;
 use App\Domain\Invoice\InvoiceBuilder;
 use App\Director\Director;
+use App\Domain\Computer\Computer;
+use App\Domain\UserManual\UserManual;
+use App\Domain\Invoice\Invoice;
 
 /**
  * Clase ComputerShop (Cliente)
@@ -19,7 +22,7 @@ class ComputerShop
     /**
      * Entrega un ordenador fabricado según el modelo indicado.
      */
-    public function sellComputer(string $model): \App\Domain\Computer\Computer
+    public function sellComputer(string $model): Computer
     {
         // Instanciamos el Builder concreto que fabrica ordenadores
         $builder = new ComputerBuilder();
@@ -37,7 +40,7 @@ class ComputerShop
     /**
      * Genera el manual de usuario para el modelo indicado.
      */
-    public function generateManual(string $model): \App\Domain\UserManual\UserManual
+    public function generateManual(string $model): UserManual
     {
         $builder = new UserManualBuilder();
         $director = new Director($builder);
@@ -48,7 +51,7 @@ class ComputerShop
     /**
      * Genera la factura para el modelo indicado.
      */
-    public function generateInvoice(string $model): \App\Domain\Invoice\Invoice
+    public function generateInvoice(string $model): Invoice
     {
         $builder = new InvoiceBuilder();
         $director = new Director($builder);
