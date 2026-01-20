@@ -16,7 +16,7 @@ Repositorio creado para explicar el patrón **Builder** y su implementación med
       <ul>
         <li>💡 <a href="#-entendiendo-la-definición">Entendiendo la definición</a></li>
         <li>🛂 <a href="#-elementos-típicos-que-encontramos-en-un-patrón-builder">Elementos típicos que encontramos en un patrón Builder</a></li>
-        <li>👨🏼‍🔧 <a href="#-aplicando-la-definición-a-un-caso-práctico-tienda-de-ordenadores">Aplicando la definición a un caso práctico: Tienda de Ordenadores</a></li>
+        <li>✅ <a href="#-aplicando-la-definición-a-un-caso-práctico-tienda-de-ordenadores">Aplicando la definición a un caso práctico: Tienda de Ordenadores</a></li>
         <li>👍🏼 <a href="#-cuándo-usar-el-patrón-builder">¿Cuándo usar el patrón Builder?</a></li>
         <li>🎯 <a href="#-qué-objetivos-se-buscan-al-aplicar-el-patrón-builder"> ¿Qué objetivos se buscan al aplicar el patrón Builder?</a></li>
       </ul>
@@ -116,7 +116,7 @@ Es la entidad que orquesta el uso del patrón para obtener los productos.
 
 <br>
 
-### 👨🏼‍🔧 Aplicando la definición a un caso práctico: Tienda de ordenadores
+### ✅ Aplicando la definición a un caso práctico: Tienda de ordenadores
 
 Imagina este patrón como la fabiración de un ordenador. La clase del objeto podría ser una clase `Computer`, que contendría todos los atributos o propiedades del ordenador, pero con este patrón Builder, esta clase sólo sería capaz de crear una especie de ordenador en bruto, mientras que todos los pasos para montarlo serían extraidos a una clase dedicada a ello `ComputerBuilder`, incluido un método para retornar el objeto final.
 
