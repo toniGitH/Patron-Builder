@@ -2,7 +2,7 @@
 
 require_once 'vendor/autoload.php';
 
-use App\Clients\ComputerShop;
+use App\Client\ComputerShop;
 
 /**
  * Lógica de fabricación de products (Cliente ComputerShop)
@@ -11,12 +11,14 @@ $shop = new ComputerShop();
 $products = [];
 
 // --- PEDIDO 1: MacBook Pro ---
-// El cliente entra en la tienda...
+// Venta del ordenador al cliente
 $computerMac = $shop->sellComputer('macBookPro');
+// Generación del manual del usuario
 $manualMac   = $shop->generateManual('macBookPro');
+// Generación de la factura
 $invoiceMac  = $shop->generateInvoice('macBookPro');
 
-// Guardamos para el visualizador
+// Guardamos para el visualizador (sólo para visualización de resultados)
 $products[] = [
     'name'     => 'macBookPro',
     'computer' => $computerMac,
@@ -25,12 +27,14 @@ $products[] = [
 ];
 
 // --- PEDIDO 2: Gaming Pro ---
-// Otro cliente pide un equipo Gaming...
+// Venta del ordenador a un cliente
 $computerGaming = $shop->sellComputer('gamingPro');
+// Generación del manual del usuario
 $manualGaming   = $shop->generateManual('gamingPro');
+// Generación de la factura
 $invoiceGaming  = $shop->generateInvoice('gamingPro');
 
-// Guardamos para el visualizador
+// Guardamos para el visualizador (sólo para visualización de resultados)
 $products[] = [
     'name'     => 'gamingPro',
     'computer' => $computerGaming,
@@ -39,12 +43,14 @@ $products[] = [
 ];
 
 // --- PEDIDO 3: Acer Economy ---
-// Un tercer cliente busca algo económico...
+// Venta del ordenador a un cliente
 $computerAcer = $shop->sellComputer('acerEconomy');
+// Generación del manual del usuario
 $manualAcer   = $shop->generateManual('acerEconomy');
+// Generación de la factura
 $invoiceAcer  = $shop->generateInvoice('acerEconomy');
 
-// Guardamos para el visualizador
+// Guardamos para el visualizador (sólo para visualización de resultados)
 $products[] = [
     'name'     => 'acerEconomy',
     'computer' => $computerAcer,

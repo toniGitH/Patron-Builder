@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Clients;
+namespace App\Client;
 
 use App\Domain\Computer\ComputerBuilder;
 use App\Domain\UserManual\UserManualBuilder;
