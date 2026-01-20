@@ -168,27 +168,72 @@ Los escenarios más típicos en los que nos puede interesar aplicar el patrón B
 
 ### 🎡 ¿Qué hace esta aplicación de ejemplo?
 
+Simula el proceso de fabricación y venta en una tienda de informática.
+
+El script principal `main.php` utiliza el cliente `ComputerShop` para procesar diferentes pedidos, demostrando cómo el patrón **Builder** permite gestionar la construcción de objetos complejos y sus diversas representaciones (objetos de distinta naturaleza o clases) de forma limpia y organizada:
+
+- **Construcción de modelos predefinidos**: Solicita la fabricación de equipos con configuraciones específicas (ej: `macBookPro`, `gamingPro`) delegando el orden de los pasos en el `Director`.
+- **Generación de productos de distinta naturaleza**: Muestra cómo el mismo proceso de construcción puede producir un objeto `Computer`, un `UserManual` o una `Invoice` simplemente cambiando el `Builder` utilizado, manteniendo intacta la lógica de orquestación.
+- **Abstracción del proceso**: El cliente solicita los productos finales sin conocer los detalles internos de montaje ni las clases concretas de cada pieza, interactuando únicamente con el `Director` y la interfaz del `Builder`.
+
+La aplicación refleja la utilidad del patrón **Builder** al separar el **proceso de construcción** de la **representación final** del objeto, permitiendo que un mismo algoritmo de fabricación, en el `Director`, sirva para crear productos de tipos totalmente distintos.
 
 ### 🔄 Flujo completo de esta aplicación de ejemplo
 
-
+1.  **Instanciación del Cliente**: En `main.php` se crea una instancia de la `ComputerShop`, que actúa como una capa de abstracción (*Facade*) que encapsula la interacción entre el Director y los Builders, ofreciendo una interfaz sencilla al usuario final."
+    ```php
+    $shop = new ComputerShop();
+    ```
+2.  **Petición del Producto**: El script principal solicita un producto específico (ej. un ordenador, un manual o una factura) indicando el modelo.
+    ```php
+    $computerMac = $shop->sellComputer('macBookPro');
+    $manualMac   = $shop->generateManual('macBookPro');
+    $invoiceMac  = $shop->generateInvoice('macBookPro');
+    ```
+3.  **Selección de Builder e Inyección**: Internamente, `ComputerShop` selecciona el `Builder` adecuado (ej. `ComputerBuilder`) y lo inyecta en el `Director`.
+    ```php
+    $builder = new ComputerBuilder();
+    $director = new Director($builder);
+    ```
+4.  **Orquestación de la construcción**: El cliente solicita al `Director` que ejecute el proceso de fabricación correspondiente al modelo. Para ello, se utiliza un recurso de PHP llamado **"Métodos de variable"**, que permite invocar dinámicamente el método del `Director` que coincide con el nombre del modelo.
+    ```php
+    $director->$model(); // El valor de $model determina qué método se ejecuta
+    ```
+Por ejemplo, para el caso del modelo `macBookPro`, se invocaría el método `macBookPro()` del `Director`, con lo que la instrucción anterior equivaldría a:
+    ```php
+    $director->macBookPro();
+    ```
+5.  **Resultado final**: `ComputerShop` recupera el producto terminado desde el `Builder` y lo entrega al script principal, totalmente configurado.
+    ```php
+    return $builder->getComputer();
+    ```
 ### 👉🏼 Identificación de los principales archivos del ejemplo
 
 Debido a la complejidad del patrón y al número de clases, la estructura de archivos se ha organizado por carpetas (ver sección siguiente).
 
 #### ➡️ Builder (Interface)
-Ubicado en `src/Contracts`. Definen las "reglas del juego":
-- `Builder.php`:
+Ubicado en `src/Contracts`.
+- `Builder.php`
+
+#### ➡️ Builder concretos
+Ubicado en `src/Domain`.
+- `ComputerBuilder.php`
+- `UserManualBuilder.php`
+- `InvoiceBuilder.php`
+
+#### ➡️ Productos concretos
+Ubicado en `src/Domain`.
+- `Computer.php`
+- `UserManual.php`
+- `Invoice.php`
 
 #### ➡️ Director
 Ubicado en `src/Director`.
-
-#### ➡️ Domain
-Ubicado en `src/Domain`.
+- `Director.php`
 
 #### ➡️ Cliente
-Ubicado en ...................
-
+Ubicado en `src/Client`.
+- `Client.php`
 
 <br>
 
